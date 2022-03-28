@@ -20,16 +20,25 @@ const routes = [
     path: "/home",
     name: "home",
     component: Home,
+    meta: {
+      title: "首页",
+    },
   },
   {
     path: "/category",
     name: "category",
     component: Category,
+    meta: {
+      title: "分类",
+    },
   },
   {
     path: "/profile",
     name: "profile",
     component: Profile,
+    meta: {
+      title: "我的",
+    },
   },
 ];
 
