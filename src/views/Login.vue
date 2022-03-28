@@ -10,7 +10,13 @@
           placeholder="输入手机号"
         >
           <template #button>
-            <van-button size="small" type="default">{{ tip }}</van-button>
+            <van-button
+              size="small"
+              type="default"
+              @click="sendSms"
+              :disabled="disabled"
+              >{{ tip }}</van-button
+            >
           </template></van-field
         >
         <van-field
@@ -32,18 +38,45 @@
 </template>
 
 <script>
+import { captchas } from "services/login";
 export default {
   name: "login",
   data() {
     return {
-      phone: "",
+      phone: "18595736512",
       sms: "",
       tip: "发送验证码",
+      time: 10,
+      timer: null,
+      disabled: false,
     };
   },
   methods: {
     login() {
       this.$router.replace({ path: "/home" });
+    },
+    sendSms() {
+      this.tip = "发送中...";
+      this.disabled = true;
+      captchas(this.phone).then((res) => {
+        console.log(res);
+        if (res.code == this.$statusCode.SUCCESS) {
+          this.timer = setInterval(() => {
+            this.time = --this.time;
+            if (this.time > 0) {
+              this.tip = this.time + "秒后重发";
+            } else {
+              this.tip = "重新发送";
+              this.time = 10;
+              this.disabled = false;
+              clearInterval(this.timer);
+            }
+          }, 1000);
+        } else {
+          this.$toast(res.message);
+          this.disabled = false;
+        }
+      });
     },
   },
 };

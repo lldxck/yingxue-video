@@ -15,6 +15,10 @@ const routes = [
     path: "/login",
     name: "login",
     component: Login,
+    meta: {
+      title: '登录',
+      isShowTabBar: false
+    }
   },
   {
     path: "/home",
@@ -22,6 +26,7 @@ const routes = [
     component: Home,
     meta: {
       title: "首页",
+      isShowTabBar: true
     },
   },
   {
@@ -30,6 +35,7 @@ const routes = [
     component: Category,
     meta: {
       title: "分类",
+      isShowTabBar: true
     },
   },
   {
@@ -38,6 +44,7 @@ const routes = [
     component: Profile,
     meta: {
       title: "我的",
+      isShowTabBar: true
     },
   },
 ];

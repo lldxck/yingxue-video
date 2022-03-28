@@ -5,7 +5,6 @@
 </template>
 
 <script>
-
 export default {
   name: "tabBar",
   data() {
@@ -13,5 +12,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <bottom-tab-bar />
+    <bottom-tab-bar v-show="isShowTabBar" />
   </div>
 </template>
 <script>
@@ -10,6 +10,11 @@ export default {
   name: "app",
   data() {
     return {};
+  },
+  computed: {
+    isShowTabBar() {
+      return this.$route.meta.isShowTabBar;
+    },
   },
   components: {
     BottomTabBar,
