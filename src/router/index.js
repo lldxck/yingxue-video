@@ -6,6 +6,9 @@ const Login = () => import("views/Login");
 const Home = () => import("views/home/Home");
 const Category = () => import("views/category/Category");
 const Profile = () => import("views/profile/Profile");
+const PersonalCenter = () => import('views/profile/PersonalCenter')
+const PersonalInfoEdit = () => import('views/profile/PersonalInfoEdit')
+
 const routes = [
   {
     path: "/",
@@ -47,6 +50,25 @@ const routes = [
       isShowTabBar: true
     },
   },
+  {
+    path: '/personalCenter',
+    name: "personalCenter",
+    component: PersonalCenter,
+    meta: {
+      title: '个人主页',
+      isShowTabBar: false
+    }
+  },
+  {
+    path: '/infoEdit',
+    name: 'personalInfoEdit',
+    component: PersonalInfoEdit,
+    meta: {
+      title: '用户信息修改',
+      isShowTabBar: false
+    }
+  }
+
 ];
 
 const router = new VueRouter({

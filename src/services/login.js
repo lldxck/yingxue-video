@@ -2,6 +2,11 @@ import request from './request'
 import api from 'constants/api'
 import method from 'constants/method'
 
+/**
+ * 发送短信验证码
+ * @param {*} phone 
+ * @returns 
+ */
 export function captchas(phone) {
   return request({
     url: api.CAPTCHAS_API,
@@ -11,3 +16,18 @@ export function captchas(phone) {
     }
   })
 }
+
+/**
+ * 登录
+ * @param {*} params 
+ * @returns 
+ */
+export function login(params) {
+  return request({
+    url: api.LOGIN_API,
+    method: method.POST,
+    data: params
+  })
+}
+
+// export function loginOut()

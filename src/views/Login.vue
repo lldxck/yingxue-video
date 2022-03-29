@@ -38,22 +38,34 @@
 </template>
 
 <script>
-import { captchas } from "services/login";
+import { captchas, login } from "services/login";
 export default {
   name: "login",
   data() {
     return {
       phone: "18595736512",
-      sms: "",
+      sms: "1234",
       tip: "发送验证码",
-      time: 10,
+      time: 60,
       timer: null,
       disabled: false,
     };
   },
   methods: {
     login() {
-      this.$router.replace({ path: "/home" });
+      const params = {
+        phone: this.phone,
+        captcha: this.sms,
+      };
+      login(JSON.stringify(params)).then((res) => {
+        if (res.code == this.$statusCode.SUCCESS) {
+          console.log(res);
+          localStorage.setItem("loginInfo", JSON.stringify(res.data));
+          this.$router.replace({ path: "/home" });
+        } else {
+          this.$toast(res.message);
+        }
+      });
     },
     sendSms() {
       this.tip = "发送中...";
@@ -67,7 +79,7 @@ export default {
               this.tip = this.time + "秒后重发";
             } else {
               this.tip = "重新发送";
-              this.time = 10;
+              this.time = 60;
               this.disabled = false;
               clearInterval(this.timer);
             }
