@@ -28,6 +28,7 @@
 <script>
 import NavBar from "components/navBar/NavBar";
 import { user } from "services/profile";
+import { loginOut } from "services/login";
 export default {
   name: "profile",
   data() {
@@ -58,7 +59,16 @@ export default {
     personalCenter() {
       this.$router.push({ path: "/personalCenter" });
     },
-    loginOut() {},
+    loginOut() {
+      loginOut().then((res) => {
+        if (res.code == this.$statusCode.SUCCESS) {
+          localStorage.removeItem("loginInfo");
+          localStorage.removeItem("userInfo");
+        } else {
+          this.$toast(res.message);
+        }
+      });
+    },
   },
   components: {
     NavBar,

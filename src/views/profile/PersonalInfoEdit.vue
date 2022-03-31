@@ -13,6 +13,7 @@
         clearable
         placeholder="起个有特点的名字吧"
         ref="name"
+        @change="onChange"
       />
     </div>
     <div v-if="isCurrentEdit == 'intro'">
@@ -25,6 +26,7 @@
         placeholder="添加简介，让大家更好的认识你"
         show-word-limit
         ref="intro"
+        @change="onChange"
       />
     </div>
     <div v-if="isCurrentEdit == 'phone'">
@@ -35,6 +37,7 @@
         type="tel"
         placeholder="输入手机号"
         ref="newPhone"
+        @change="onChange"
       >
         <template #button>
           <van-button
@@ -60,6 +63,8 @@
 
 <script>
 import NavBar from "components/navBar/NavBar";
+import { userUpdate } from "services/profile";
+import { captchas } from "services/login";
 export default {
   name: "personalInfoEdit",
   data() {
@@ -73,6 +78,8 @@ export default {
       newPhone: "",
       sms: "",
       tip: "发送验证码",
+      time: 60,
+      timer: null,
       disabled: false,
       isCanSubmit: false,
     };
@@ -115,7 +122,67 @@ export default {
     });
   },
   methods: {
-    sendSms() {},
+    onChange() {
+      this.isCanSubmit = true;
+    },
+    sendSms() {
+      this.tip = "发送中...";
+      this.disabled = true;
+      captchas(this.newPhone).then((res) => {
+        if (res.code == this.$statusCode.SUCCESS) {
+          this.timer = setInterval(() => {
+            this.time = --this.time;
+            if (this.time > 0) {
+              this.tip = this.time + "秒后重发";
+            } else {
+              this.tip = "重新发送";
+              this.time = 60;
+              this.disabled = false;
+              clearInterval(this.timer);
+            }
+          }, 1000);
+        } else {
+          this.$toast(res.message);
+          this.disabled = false;
+        }
+      });
+    },
+    userUpdate() {
+      const params = {};
+      switch (this.isCurrentEdit) {
+        case "name":
+          params.name = this.info.name;
+          break;
+        case "phone":
+          params.phone = this.newPhone;
+          params.captcha = this.sms;
+          break;
+        case "intro":
+          params.intro = this.info.intro;
+          break;
+      }
+      userUpdate(JSON.stringify(params)).then((res) => {
+        if (res.code == this.$statusCode.SUCCESS) {
+          // 修改成功
+          const userInfo = localStorage.getItem("userInfo");
+          switch (this.isCurrentEdit) {
+            case "name":
+              userInfo.name = this.info.name;
+              break;
+            case "phone":
+              userInfo.phone = this.newPhone;
+              break;
+            case "intro":
+              userInfo.intro = this.info.intro;
+              break;
+          }
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          this.$router.go(-1);
+        } else {
+          this.$toast(res.message);
+        }
+      });
+    },
   },
   components: {
     NavBar,
