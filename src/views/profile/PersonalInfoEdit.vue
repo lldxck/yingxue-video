@@ -3,7 +3,11 @@
     <nav-bar>
       <div slot="left"><van-icon name="arrow-left" /></div>
       <div slot="center">{{ title }}</div>
-      <van-button type="default" slot="right" :disabled="isCanSubmit"
+      <van-button
+        type="default"
+        slot="right"
+        :disabled="!isCanSubmit"
+        @click="submit"
         >提交</van-button
       >
     </nav-bar>
@@ -13,7 +17,7 @@
         clearable
         placeholder="起个有特点的名字吧"
         ref="name"
-        @change="onChange"
+        @input="onInput($event)"
       />
     </div>
     <div v-if="isCurrentEdit == 'intro'">
@@ -26,18 +30,18 @@
         placeholder="添加简介，让大家更好的认识你"
         show-word-limit
         ref="intro"
-        @change="onChange"
+        @input="onInput($event)"
       />
     </div>
     <div v-if="isCurrentEdit == 'phone'">
       <van-field label="原手机号" :value="info.phone" readonly />
       <van-field
-        v-model="newPhone"
+        v-model="info.newPhone"
         label="新手机号"
         type="tel"
         placeholder="输入手机号"
         ref="newPhone"
-        @change="onChange"
+        @input="onInput($event)"
       >
         <template #button>
           <van-button
@@ -50,7 +54,7 @@
         </template></van-field
       >
       <van-field
-        v-model="sms"
+        v-model="info.captcha"
         center
         clearable
         label="验证码"
@@ -74,9 +78,10 @@ export default {
         name: "",
         intro: "",
         phone: "11",
+        newPhone: "",
+        captcha: "",
       },
-      newPhone: "",
-      sms: "",
+
       tip: "发送验证码",
       time: 60,
       timer: null,
@@ -88,6 +93,8 @@ export default {
     console.log(this.$route);
     this.isCurrentEdit = this.$route.query.name;
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    userInfo.newPhone = "";
+    userInfo.captcha = "";
     this.info = userInfo;
   },
   computed: {
@@ -122,13 +129,14 @@ export default {
     });
   },
   methods: {
-    onChange() {
+    onInput(e) {
+      console.log(e);
       this.isCanSubmit = true;
     },
     sendSms() {
       this.tip = "发送中...";
       this.disabled = true;
-      captchas(this.newPhone).then((res) => {
+      captchas(this.info.newPhone).then((res) => {
         if (res.code == this.$statusCode.SUCCESS) {
           this.timer = setInterval(() => {
             this.time = --this.time;
@@ -147,37 +155,13 @@ export default {
         }
       });
     },
-    userUpdate() {
-      const params = {};
-      switch (this.isCurrentEdit) {
-        case "name":
-          params.name = this.info.name;
-          break;
-        case "phone":
-          params.phone = this.newPhone;
-          params.captcha = this.sms;
-          break;
-        case "intro":
-          params.intro = this.info.intro;
-          break;
-      }
-      userUpdate(JSON.stringify(params)).then((res) => {
+    submit() {
+      userUpdate(JSON.stringify(this.info)).then((res) => {
         if (res.code == this.$statusCode.SUCCESS) {
+          console.log(res);
           // 修改成功
-          const userInfo = localStorage.getItem("userInfo");
-          switch (this.isCurrentEdit) {
-            case "name":
-              userInfo.name = this.info.name;
-              break;
-            case "phone":
-              userInfo.phone = this.newPhone;
-              break;
-            case "intro":
-              userInfo.intro = this.info.intro;
-              break;
-          }
-          localStorage.setItem("userInfo", JSON.stringify(userInfo));
-          this.$router.goBack();
+          localStorage.setItem("userInfo", JSON.stringify(res.data));
+          this.$router.go(-1);
         } else {
           this.$toast(res.message);
         }

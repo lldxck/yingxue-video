@@ -64,6 +64,7 @@ export default {
         if (res.code == this.$statusCode.SUCCESS) {
           localStorage.removeItem("loginInfo");
           localStorage.removeItem("userInfo");
+          this.$router.replace({ path: "/login" });
         } else {
           this.$toast(res.message);
         }

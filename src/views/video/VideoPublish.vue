@@ -1,7 +1,7 @@
 <template>
   <div class="video-publish">
     <nav-bar>
-      <div slot="left"><van-icon name="arrow-left" @click="goBack" /></div>
+      <div slot="left"><van-icon name="arrow-left" /></div>
       <div slot="center">{{ title }}</div>
       <div slot="right">
         <van-button type="default" slot="right">发布</van-button>
@@ -23,11 +23,7 @@ export default {
       return this.$route.meta.title;
     },
   },
-  methods: {
-    goBack() {
-      this.$router.goBack();
-    },
-  },
+  methods: {},
   components: {
     NavBar,
   },
