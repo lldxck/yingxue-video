@@ -1,0 +1,48 @@
+.video-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding-top: 8px;
+  .video-item {
+    width: 46%;
+    margin-bottom: 10px;
+    padding: 10px 6px;
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: 0 0 3px #ddd;
+    .cover-img {
+      width: 100%;
+      margin-bottom: 6px;
+      img {
+        width: 100%;
+      }
+    }
+    .video-info {
+      .title {
+        color: #333;
+        font-size: 16px;
+        margin-bottom: 4px;
+      }
+      .video-uploader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .uploader {
+          color: #999;
+          font-size: 12px;
+        }
+        .likes {
+          font-size: 12px;
+          color: #333;
+        }
+      }
+    }
+  }
+}
+.van-list {
+  padding-bottom: 50px;
+}
+.custom-image .van-empty__image {
+  width: 60px;
+  height: 60px;
+}

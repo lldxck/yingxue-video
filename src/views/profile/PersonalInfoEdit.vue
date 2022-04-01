@@ -177,7 +177,7 @@ export default {
               break;
           }
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
-          this.$router.go(-1);
+          this.$router.goBack();
         } else {
           this.$toast(res.message);
         }

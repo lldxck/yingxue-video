@@ -1,19 +1,20 @@
 <template>
-  <div class="home-page">
+  <div class="video-publish">
     <nav-bar>
-      <div slot="left"><van-icon name="search" /></div>
+      <div slot="left"><van-icon name="arrow-left" @click="goBack" /></div>
       <div slot="center">{{ title }}</div>
-      <div slot="right"><van-icon name="add-o" @click="publish" /></div>
+      <div slot="right">
+        <van-button type="default" slot="right">发布</van-button>
+      </div>
     </nav-bar>
-    <video-list />
+    <div></div>
   </div>
 </template>
 
 <script>
 import NavBar from "components/navBar/NavBar";
-import VideoList from "views/video/VideoList";
 export default {
-  name: "home",
+  name: "videoPublish",
   data() {
     return {};
   },
@@ -23,13 +24,12 @@ export default {
     },
   },
   methods: {
-    publish() {
-      this.$router.push({ path: "/videoPublish" });
+    goBack() {
+      this.$router.goBack();
     },
   },
   components: {
     NavBar,
-    VideoList,
   },
 };
 </script>
