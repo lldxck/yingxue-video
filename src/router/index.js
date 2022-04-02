@@ -9,6 +9,8 @@ const Profile = () => import("views/profile/Profile");
 const PersonalCenter = () => import("views/profile/PersonalCenter");
 const PersonalInfoEdit = () => import("views/profile/PersonalInfoEdit");
 const VideoPublish = () => import("views/video/VideoPublish");
+const Search = () => import("views/search/Search");
+const VideoDetail = () => import("views/video/VideoDetail");
 
 const routes = [
   {
@@ -75,6 +77,24 @@ const routes = [
     component: VideoPublish,
     meta: {
       title: "发布视频",
+      isShowTabBar: false,
+    },
+  },
+  {
+    path: "/search",
+    name: "search",
+    component: Search,
+    meta: {
+      title: "搜索",
+      isShowTabBar: false,
+    },
+  },
+  {
+    path: "/videoDetail/:id",
+    name: "VideoDetail",
+    component: VideoDetail,
+    meta: {
+      title: "视频详情",
       isShowTabBar: false,
     },
   },

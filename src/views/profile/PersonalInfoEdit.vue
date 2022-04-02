@@ -1,7 +1,7 @@
 <template>
   <div class="personal-info-edit-page">
     <nav-bar>
-      <div slot="left"><van-icon name="arrow-left" /></div>
+      <div slot="left" @click="goBack"><van-icon name="arrow-left" /></div>
       <div slot="center">{{ title }}</div>
       <van-button
         type="default"
@@ -166,6 +166,9 @@ export default {
           this.$toast(res.message);
         }
       });
+    },
+    goBack() {
+      this.$router.go(-1);
     },
   },
   components: {

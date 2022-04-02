@@ -1,7 +1,7 @@
 <template>
   <div class="personal-center-page">
     <nav-bar>
-      <div slot="left"><van-icon name="arrow-left" /></div>
+      <div slot="left" @click="goBack"><van-icon name="arrow-left" /></div>
       <div slot="center">{{ title }}</div>
     </nav-bar>
     <div class="avatar">
@@ -56,6 +56,9 @@ export default {
           name: name,
         },
       });
+    },
+    goBack() {
+      this.$router.go(-1);
     },
   },
   components: {

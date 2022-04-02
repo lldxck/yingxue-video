@@ -1,5 +1,5 @@
 <template>
-  <div class="video-item">
+  <div class="video-item" @click="videoDetail">
     <div class="cover-img">
       <img
         src="https://collegetest.fs-salon.cn/File/2022/1/10/1db057619b1d425c8041a2feb9db8a62_small.png"
@@ -9,7 +9,7 @@
     <div class="video-info">
       <div class="title">课程标题</div>
       <div class="video-uploader">
-        <div class="uploader">up主名称</div>
+        <div class="uploader">类别</div>
         <div>
           <van-icon name="good-job-o" color="#2296A3" />
           <!-- <van-icon name="good-job-o" /> -->
@@ -31,6 +31,11 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    videoDetail() {
+      this.$router.push({ path: "/videoDetail/1" });
+    },
   },
 };
 </script>
