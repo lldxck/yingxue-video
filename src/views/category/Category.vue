@@ -18,7 +18,50 @@
         <van-sidebar-item title="标签名称" />
         <van-sidebar-item title="标签名称" />
         <van-sidebar-item title="标签名称" />
+        <van-sidebar-item title="标签名称" />
+        <van-sidebar-item title="标签名称" />
+        <van-sidebar-item title="标签名称" />
+        <van-sidebar-item title="标签名称" />
       </van-sidebar>
+    </div>
+    <div class="category-two">
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
+      <div class="item">JAVA</div>
     </div>
   </div>
 </template>
