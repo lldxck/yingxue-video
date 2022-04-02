@@ -25,11 +25,13 @@
 
 <script>
 import NavBar from "components/navBar/NavBar";
+import { category } from "services/category";
 export default {
   name: "category",
   data() {
     return {
       activeKey: 0,
+      list: [],
     };
   },
   computed: {
@@ -37,9 +39,20 @@ export default {
       return this.$route.meta.title;
     },
   },
+  created() {},
   methods: {
     onChange(index) {
       console.log(index);
+    },
+    category() {
+      category().then((res) => {
+        console.log(res);
+        if (res.code == this.$statusCode.SUCCESS) {
+          this.list = res.data;
+        } else {
+          this.$toast(res.message);
+        }
+      });
     },
   },
   components: {

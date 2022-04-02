@@ -81,12 +81,12 @@ export default {
         newPhone: "",
         captcha: "",
       },
-
       tip: "发送验证码",
       time: 60,
       timer: null,
       disabled: false,
       isCanSubmit: false,
+      isOriginUserInfo: null,
     };
   },
   created() {
@@ -95,7 +95,8 @@ export default {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     userInfo.newPhone = "";
     userInfo.captcha = "";
-    this.info = userInfo;
+    this.info = { ...userInfo };
+    this.isOriginUserInfo = { ...userInfo };
   },
   computed: {
     title() {
@@ -130,8 +131,25 @@ export default {
   },
   methods: {
     onInput(e) {
-      console.log(e);
-      this.isCanSubmit = true;
+      switch (this.isCurrentEdit) {
+        case "name":
+          if (this.isOriginUserInfo.name == e) {
+            this.isCanSubmit = false;
+          } else {
+            this.isCanSubmit = true;
+          }
+          break;
+        case "intro":
+          if (this.isOriginUserInfo.intro == e) {
+            this.isCanSubmit = false;
+          } else {
+            this.isCanSubmit = true;
+          }
+          break;
+        default:
+          this.isCanSubmit = true;
+          break;
+      }
     },
     sendSms() {
       this.tip = "发送中...";
