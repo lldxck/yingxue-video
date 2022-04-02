@@ -7,8 +7,8 @@
       @load="onLoad"
       v-if="list.length > 0"
     >
-      <div class="video-list">
-        <video-item v-for="item in list" :key="item.id" :data="item" />
+      <div class="search-list">
+        <search-item v-for="item in list" :key="item.id" :data="item" />
       </div>
     </van-list>
     <van-empty
@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import VideoItem from "./VideoItem.vue";
 import { videoRecommends } from "services/video";
+import SearchItem from "./SearchItem.vue";
 export default {
-  name: "videoList",
+  name: "searchList",
   data() {
     return {
       list: [],
@@ -80,7 +80,7 @@ export default {
     },
   },
   components: {
-    VideoItem,
+    SearchItem,
   },
 };
 </script>
