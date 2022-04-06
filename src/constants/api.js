@@ -7,5 +7,5 @@ export default {
   USER_API: "/user/user", //用户信息
   USER_UPDATE_API: "/user/user", //修改用户信息
   // 分类
-  CATEGORY_API: '/category/categories',//分类
+  CATEGORY_API: '/category/categories',//分类列表
 };

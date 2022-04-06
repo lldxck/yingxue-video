@@ -4,7 +4,7 @@ import { Toast } from 'vant'
 
 export default function request(config) {
   const instance = axios.create({
-    baseURL: "http://192.168.1.103:9999",
+    baseURL: "http://192.168.1.101:9999",
     timeout: 15000,
   });
   instance.defaults.headers['Content-Type'] = 'application/json'
