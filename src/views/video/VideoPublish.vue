@@ -33,6 +33,22 @@
         placeholder="请输入简介"
         show-word-limit
       />
+      <van-field
+        v-model="currentValue"
+        is-link
+        readonly
+        label="分类"
+        placeholder="请选择类别"
+        @click="show = true"
+      />
+      <van-popup v-model="show" round position="bottom">
+        <van-tree-select
+          :items="categoryList"
+          :active-id.sync="activeId"
+          :main-active-index.sync="activeIndex"
+          @click-item="clickChild"
+        />
+      </van-popup>
     </div>
   </div>
 </template>
@@ -49,6 +65,14 @@ export default {
         title: "",
         intro: "",
       },
+      show: false,
+      currentValue: "",
+      activeId: 1,
+      activeIndex: 0,
+      categoryList: [
+        { id: 1, text: "浙江", children: [{ id: 3, text: "111" }] },
+        { id: 2, text: "江苏", children: [{ id: 4, text: "222" }] },
+      ],
     };
   },
   computed: {
@@ -68,6 +92,12 @@ export default {
     },
     goBack() {
       this.$router.go(-1);
+    },
+    clickChild(data) {
+      console.log(data);
+      this.currentValue = data.text;
+      this.show = false;
+      console.log("activeId", this.activeId);
     },
   },
   components: {
