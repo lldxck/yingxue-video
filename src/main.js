@@ -4,13 +4,14 @@ import router from "./router";
 import store from "./store";
 import Vant from "vant";
 import "vant/lib/index.css";
-import status from 'constants/status'
-import statusCode from 'constants/statusCode'
+import status from "constants/status";
+import statusCode from "constants/statusCode";
+import "plyr/dist/plyr.css";
 
 Vue.config.productionTip = false;
 Vue.use(Vant);
-Vue.prototype.$status = status
-Vue.prototype.$statusCode = statusCode
+Vue.prototype.$status = status;
+Vue.prototype.$statusCode = statusCode;
 new Vue({
   router,
   store,
