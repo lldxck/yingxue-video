@@ -25,3 +25,4 @@ export function userUpdate(params) {
     data: params,
   });
 }
+

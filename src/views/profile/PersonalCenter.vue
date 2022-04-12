@@ -5,7 +5,11 @@
       <div slot="center">{{ title }}</div>
     </nav-bar>
     <div class="avatar">
-      <img :src="userInfo.avatar" alt="" />
+      <van-uploader :after-read="afterRead" :max-count="1" :deletable="false">
+        <img :src="userInfo.avatar" alt="" />
+        <van-icon name="flower-o" />
+      </van-uploader>
+
       <div class="tip">点击更换头像</div>
     </div>
     <div class="info">
@@ -33,11 +37,15 @@
 
 <script>
 import NavBar from "components/navBar/NavBar";
+// import { upload } from "services/public";
+import { userUpdate } from "services/profile";
+import client from "utils/aliOss";
 export default {
   name: "personalCenter",
   data() {
     return {
       userInfo: {},
+      fileList: [],
     };
   },
   computed: {
@@ -59,6 +67,39 @@ export default {
     },
     goBack() {
       this.$router.go(-1);
+    },
+    afterRead(file) {
+      // const formData = new FormData();
+      // formData.append("file", file.file);
+      // upload(formData).then((res) => {
+      //   if (res.code == this.$statusCode.SUCCESS) {
+      //     this.userUpdate(res.data);
+      //   } else {
+      //     this.$toast("上传失败");
+      //   }
+      // });
+      // 直接上传oss
+      console.log("file", file);
+      const date = new Date();
+      const name = `${date.getFullYear()}-${
+        date.getMonth() + 1
+      }-${date.getDate()}/${file.file.name}`;
+      client.put(name, file.file).then((res) => {
+        console.log(res);
+      });
+    },
+    userUpdate(avatar) {
+      const info = { ...this.userInfo };
+      info.avatar = avatar;
+      userUpdate(JSON.stringify(info)).then((res) => {
+        if (res.code == this.$statusCode.SUCCESS) {
+          this.$toast("上传成功");
+          localStorage.setItem("userInfo", JSON.stringify(res.data));
+          this.$router.go(0);
+        } else {
+          this.$toast(res.message);
+        }
+      });
     },
   },
   components: {

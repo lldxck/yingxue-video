@@ -1,6 +1,7 @@
 export default {
   //  公共
   CAPTCHAS_API: "/public/captchas", //发送短信验证码
+  UPLOAD_API: '/public/upload',//文件上传
   // 用户
   LOGIN_API: "/user/tokens", //登录
   LOGINOUT_API: "/user/token", //注销

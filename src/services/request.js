@@ -4,7 +4,7 @@ import { Toast } from 'vant'
 
 export default function request(config) {
   const instance = axios.create({
-    baseURL: "http://192.168.1.101:9999",
+    baseURL: "http://192.168.1.104:9999",
     timeout: 15000,
   });
   instance.defaults.headers['Content-Type'] = 'application/json'
@@ -15,6 +15,9 @@ export default function request(config) {
       const loginInfo = JSON.parse(localStorage.getItem('loginInfo'))
       if (loginInfo) {
         config.headers['Authorization'] = loginInfo.token
+      }
+      if (config.form) {
+        config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
       }
       return config;
     },
