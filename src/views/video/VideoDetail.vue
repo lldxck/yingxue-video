@@ -26,7 +26,24 @@
               <span><van-icon name="play-circle-o" />播放0次</span>
               <span><van-icon name="good-job-o" />点赞0次</span>
             </div>
-            <div class="operate"></div>
+            <div class="operate">
+              <div>
+                <van-icon name="good-job-o" />
+                <p>点赞</p>
+              </div>
+              <div>
+                <van-icon name="close" />
+                <p>不喜欢</p>
+              </div>
+              <div>
+                <van-icon name="like-o" />
+                <p>收藏</p>
+              </div>
+              <div>
+                <van-icon name="share-o" />
+                <p>分享</p>
+              </div>
+            </div>
             <div>简介内容展示</div>
           </div>
         </van-tab>

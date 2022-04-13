@@ -7,7 +7,7 @@
     <div class="avatar">
       <van-uploader :after-read="afterRead" :max-count="1" :deletable="false">
         <img :src="userInfo.avatar" alt="" />
-        <van-icon name="flower-o" />
+        <van-icon name="photo-o" />
       </van-uploader>
 
       <div class="tip">点击更换头像</div>
@@ -40,6 +40,7 @@ import NavBar from "components/navBar/NavBar";
 // import { upload } from "services/public";
 import { userUpdate } from "services/profile";
 import client from "utils/aliOss";
+import { formatTimeToStr } from "utils/utils";
 export default {
   name: "personalCenter",
   data() {
@@ -54,7 +55,7 @@ export default {
     },
   },
   created() {
-    this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    // this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
   },
   methods: {
     goEditPage(name) {
@@ -80,12 +81,16 @@ export default {
       // });
       // 直接上传oss
       console.log("file", file);
-      const date = new Date();
-      const name = `${date.getFullYear()}-${
-        date.getMonth() + 1
-      }-${date.getDate()}/${file.file.name}`;
+      const name = `${formatTimeToStr(new Date(), "yyyy-MM-dd ")}/JPEG/${
+        file.file.name
+      }`;
       client.put(name, file.file).then((res) => {
         console.log(res);
+        if (res.res.statusCode == this.$statusCode.SUCCESS) {
+          this.userUpdate(res.url);
+        } else {
+          this.$toast("上传失败");
+        }
       });
     },
     userUpdate(avatar) {
