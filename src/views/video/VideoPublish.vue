@@ -4,7 +4,9 @@
       <div slot="left" @click="goBack"><van-icon name="arrow-left" /></div>
       <div slot="center">{{ title }}</div>
       <div slot="right">
-        <van-button type="default" slot="right">发布</van-button>
+        <van-button type="default" slot="right" @click="publish"
+          >发布</van-button
+        >
       </div>
     </nav-bar>
     <div>
@@ -20,7 +22,13 @@
             :after-read="afterRead"
             :max-count="maxCount"
             accept="video/*"
-          />
+            preview-size="120px"
+            @click-preview="clickPreview"
+          >
+            <div slot="preview-cover">
+              <video :src="videoInfo.link" class="video"></video>
+            </div>
+          </van-uploader>
         </template>
       </van-field>
       <van-field
@@ -44,17 +52,28 @@
       <van-popup v-model="show" round position="bottom">
         <van-tree-select
           :items="categoryList"
-          :active-id.sync="activeId"
+          :active-id.sync="videoInfo.categoryId"
           :main-active-index.sync="activeIndex"
           @click-item="clickChild"
         />
       </van-popup>
     </div>
+    <van-popup v-model="videoShow">
+      <div class="video-container">
+        <video
+          controls
+          :src="videoInfo.link"
+          :style="{ width: '100%' }"
+        ></video></div
+    ></van-popup>
   </div>
 </template>
 
 <script>
 import NavBar from "components/navBar/NavBar";
+import { categoryTree } from "services/category";
+import { upload } from "services/public";
+import { videoPublish } from "services/video";
 export default {
   name: "videoPublish",
   data() {
@@ -64,15 +83,15 @@ export default {
       videoInfo: {
         title: "",
         intro: "",
+        link: "",
+        categoryId: 1,
       },
       show: false,
       currentValue: "",
-      activeId: 1,
+
       activeIndex: 0,
-      categoryList: [
-        { id: 1, text: "浙江", children: [{ id: 3, text: "111" }] },
-        { id: 2, text: "江苏", children: [{ id: 4, text: "222" }] },
-      ],
+      categoryList: [],
+      videoShow: false,
     };
   },
   computed: {
@@ -80,24 +99,70 @@ export default {
       return this.$route.meta.title;
     },
   },
+  created() {
+    this.getCategoryData();
+  },
   methods: {
     afterRead(file) {
       file.status = "uploading";
       file.message = "上传中...";
-
-      setTimeout(() => {
-        file.status = "failed";
-        file.message = "上传失败";
-      }, 1000);
+      const formData = new FormData();
+      formData.append("file", file.file);
+      upload(formData).then((res) => {
+        if (res.code == this.$statusCode.SUCCESS) {
+          file.status = "done";
+          file.message = "上传成功";
+          this.videoInfo.link = res.data;
+        } else {
+          this.$toast("上传失败");
+          file.status = "failed";
+          file.message = "上传失败";
+        }
+      });
+    },
+    clickPreview() {
+      this.videoShow = true;
     },
     goBack() {
       this.$router.go(-1);
     },
     clickChild(data) {
-      console.log(data);
       this.currentValue = data.text;
       this.show = false;
-      console.log("activeId", this.activeId);
+    },
+    getCategoryData() {
+      categoryTree().then((res) => {
+        if (res.code == this.$statusCode.SUCCESS) {
+          const list = res.data.filter((item) => item.parentId == null);
+          list.map((item) => {
+            item.text = item.name;
+            const cList = this.findChildren(item, res.data);
+            item.children = cList;
+          });
+          this.categoryList = list;
+        } else {
+          this.$toast(res.message);
+        }
+      });
+    },
+    findChildren(item, data) {
+      const list = data.filter((cItem) => cItem.parentId == item.id);
+      list.map((cItem) => {
+        cItem.text = cItem.name;
+        const list = this.findChildren(cItem, data);
+        cItem.children = list;
+      });
+      return list;
+    },
+    publish() {
+      videoPublish(JSON.stringify(this.videoInfo)).then((res) => {
+        if (res.code == this.$statusCode.SUCCESS) {
+          this.$toast("发布成功");
+          this.$router.go(-1);
+        } else {
+          this.$toast(res.message);
+        }
+      });
     },
   },
   components: {

@@ -8,7 +8,7 @@
       v-if="list.length > 0"
     >
       <div class="video-list">
-        <video-item v-for="item in list" :key="item.id" :data="item" />
+        <video-item v-for="item in list" :key="item.id" :item="item" />
       </div>
     </van-list>
     <van-empty
@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     async onLoad() {
-      console.log(this.refreshing);
       setTimeout(async () => {
         if (this.refreshing) {
           this.list = [];
@@ -49,17 +48,13 @@ export default {
         }
         // 获取视频列表数据
         const params = {
-          priceType: 0,
-          orderType: 0,
-          couType: 0,
-          pageIndex: this.pageIndex,
+          currentPage: this.pageIndex,
           pageSize: this.pageSize,
-          tagIDs: null,
         };
         const res = await videoRecommends(params);
         console.log(res);
         console.log(res.data);
-        const data = res.data;
+        const data = res.data.records;
 
         this.list = this.list.concat(data);
         this.pageIndex++;

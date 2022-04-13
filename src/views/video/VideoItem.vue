@@ -2,17 +2,16 @@
   <div class="video-item" @click="videoDetail">
     <div class="cover-img">
       <img
-        src="https://collegetest.fs-salon.cn/File/2022/1/10/1db057619b1d425c8041a2feb9db8a62_small.png"
+        :src="item.cover"
         alt=""
       />
     </div>
     <div class="video-info">
-      <div class="title">课程标题</div>
+      <div class="title">{{ item.title }}</div>
       <div class="video-uploader">
-        <div class="uploader">类别</div>
+        <div class="uploader">{{ item.categoryName }}</div>
         <div>
           <van-icon name="good-job-o" color="#2296A3" />
-          <!-- <van-icon name="good-job-o" /> -->
           <span class="likes">22</span>
         </div>
       </div>
@@ -24,10 +23,12 @@
 export default {
   name: "videoItem",
   props: {
-    // data: {
-    //   type: Object,
-    //   default: {},
-    // },
+    item: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
   data() {
     return {};

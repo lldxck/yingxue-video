@@ -55,7 +55,7 @@ export default {
     },
   },
   created() {
-    // this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
   },
   methods: {
     goEditPage(name) {
@@ -80,8 +80,9 @@ export default {
       //   }
       // });
       // 直接上传oss
+      // const timestamp = new Date().getTime();
       console.log("file", file);
-      const name = `${formatTimeToStr(new Date(), "yyyy-MM-dd ")}/JPEG/${
+      const name = `${formatTimeToStr(new Date(), "yyyy-MM-dd")}/JPEG/${
         file.file.name
       }`;
       client.put(name, file.file).then((res) => {

@@ -15,3 +15,15 @@ export function categoryList(id) {
     }
   })
 }
+
+/**
+ * 获取分类树形数据
+ * @returns 
+ */
+export function categoryTree() {
+  return request({
+    url: api.CATEGORY_TREE_API,
+    method: method.GET,
+
+  })
+}
