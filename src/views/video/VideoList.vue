@@ -25,6 +25,12 @@ import VideoItem from "./VideoItem.vue";
 import { videoRecommends } from "services/video";
 export default {
   name: "videoList",
+  props: {
+    id: {
+      type: Number,
+      default: -1,
+    },
+  },
   data() {
     return {
       list: [],
@@ -51,6 +57,9 @@ export default {
           currentPage: this.pageIndex,
           pageSize: this.pageSize,
         };
+        if (this.id != -1) {
+          params.categoryId = this.id;
+        }
         const res = await videoRecommends(params);
         console.log(res);
         console.log(res.data);

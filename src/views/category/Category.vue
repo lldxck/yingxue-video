@@ -53,6 +53,7 @@ export default {
     onChange(index) {
       console.log(index, this.list);
       const id = this.list[index].id;
+      console.log("id", id);
       this.category(id);
     },
     async category(id) {
@@ -71,6 +72,13 @@ export default {
     },
     categoryClick(item) {
       console.log(item);
+      this.$router.push({
+        path: "/categoryList",
+        query: {
+          name: item.name,
+          id: item.id,
+        },
+      });
     },
   },
   components: {

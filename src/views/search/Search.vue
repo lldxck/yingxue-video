@@ -2,14 +2,14 @@
   <div class="search-page">
     <form action="/" class="search-form">
       <van-search
-        v-model="value"
+        v-model="title"
         show-action
         placeholder="请输入搜索关键词"
         @search="onSearch"
         @cancel="onCancel"
       />
     </form>
-    <search-list />
+    <search-list :title="val" />
   </div>
 </template>
 
@@ -19,12 +19,13 @@ export default {
   name: "search",
   data() {
     return {
-      value: "",
+      title: "",
+      val: "",
     };
   },
   methods: {
     onSearch(val) {
-      console.log(val);
+      this.val = val;
     },
     onCancel() {
       this.$router.go(-1);

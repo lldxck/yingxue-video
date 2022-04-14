@@ -8,7 +8,7 @@
       v-if="list.length > 0"
     >
       <div class="search-list">
-        <search-item v-for="item in list" :key="item.id" :data="item" />
+        <search-item v-for="item in list" :key="item.id" :item="item" />
       </div>
     </van-list>
     <van-empty
@@ -25,6 +25,12 @@ import { videoRecommends } from "services/video";
 import SearchItem from "./SearchItem.vue";
 export default {
   name: "searchList",
+  props: {
+    title: {
+      type: String,
+      default: "",
+    },
+  },
   data() {
     return {
       list: [],
@@ -36,11 +42,16 @@ export default {
       pageSize: 10,
     };
   },
-  created() {
-    this.onLoad();
+  watch: {
+    title(newVal, oldVal) {
+      if (newVal != oldVal) {
+        this.pageIndex = 1;
+        this.onLoad(newVal);
+      }
+    },
   },
   methods: {
-    async onLoad() {
+    async onLoad(val) {
       console.log(this.refreshing);
       setTimeout(async () => {
         if (this.refreshing) {
@@ -49,17 +60,14 @@ export default {
         }
         // 获取视频列表数据
         const params = {
-          priceType: 0,
-          orderType: 0,
-          couType: 0,
-          pageIndex: this.pageIndex,
+          currentPage: this.pageIndex,
           pageSize: this.pageSize,
-          tagIDs: null,
+          name: val,
         };
         const res = await videoRecommends(params);
         console.log(res);
         console.log(res.data);
-        const data = res.data;
+        const data = res.data.records;
 
         this.list = this.list.concat(data);
         this.pageIndex++;

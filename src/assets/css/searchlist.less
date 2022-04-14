@@ -1,16 +1,20 @@
 .search-list {
   padding: 0 16px;
+
   .search-item {
     padding: 10px 6px;
     box-shadow: 0 0 2px #eee;
     margin-bottom: 10px;
     display: flex;
+
     .cover-image {
       img {
         width: 100px;
-        height: 56px;
+        // height: 56px;
+        height: 100px;
       }
     }
+
     .info {
       flex: 1;
       background-color: #fff;
@@ -20,17 +24,34 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
       .title {
         font-size: 14px;
         color: #333;
+        margin-bottom: 6px;
       }
+
+      .intro {
+        flex: 1;
+        font-size: 13px;
+        color: #999;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        word-break: break-all;
+        -webkit-box-orient: vertical;
+      }
+
       .video-category {
         display: flex;
         justify-content: space-between;
+
         .category {
           font-size: 12px;
           color: #999;
         }
+
         .likes {
           font-size: 12px;
           color: #999;

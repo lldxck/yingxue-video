@@ -1,18 +1,19 @@
 <template>
   <div class="search-item">
     <div class="cover-image">
-      <img
-        src="https://collegetest.fs-salon.cn/File/2022/1/10/1db057619b1d425c8041a2feb9db8a62_small.png"
-        alt=""
-      />
+      <img :src="item.cover" alt="" />
     </div>
     <div class="info">
-      <div class="title">视频title</div>
+      <div>
+        <div class="title">{{ item.title }}</div>
+        <div class="intro">{{ item.intro }}才基本差不多吃的很少接触卡车陈大姐课程的卡车川大江安从</div>
+      </div>
+
       <div class="video-category">
-        <div class="category">类别</div>
+        <div class="category">{{ item.categoryName }}</div>
         <div>
           <van-icon name="good-job-o" />
-          <span class="likes">22</span>
+          <span class="likes">{{ item.likes }}</span>
         </div>
       </div>
     </div>
@@ -22,6 +23,14 @@
 <script>
 export default {
   name: "searchItem",
+  props: {
+    item: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   data() {
     return {};
   },

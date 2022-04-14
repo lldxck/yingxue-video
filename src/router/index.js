@@ -5,12 +5,14 @@ Vue.use(VueRouter);
 const Login = () => import("views/Login");
 const Home = () => import("views/home/Home");
 const Category = () => import("views/category/Category");
+const CategoryList = () => import('views/category/CategoryList');
 const Profile = () => import("views/profile/Profile");
 const PersonalCenter = () => import("views/profile/PersonalCenter");
 const PersonalInfoEdit = () => import("views/profile/PersonalInfoEdit");
 const VideoPublish = () => import("views/video/VideoPublish");
 const Search = () => import("views/search/Search");
 const VideoDetail = () => import("views/video/VideoDetail");
+
 
 const routes = [
   {
@@ -42,6 +44,15 @@ const routes = [
     meta: {
       title: "分类",
       isShowTabBar: true,
+    },
+  },
+  {
+    path: "/categoryList",
+    name: "categoryList",
+    component: CategoryList,
+    meta: {
+      title: "分类列表",
+      isShowTabBar: false,
     },
   },
   {
