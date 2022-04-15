@@ -7,7 +7,11 @@
         crossorigin
         playsinline
         poster="https://bitdash-a.akamaihd.net/content/sintel/poster.png"
-      ></video>
+      >
+        <source
+          src="https://fsbucket-10017732.video.myqcloud.com/test-fsvideo/雾里_1627353447599_1642555201970.mp4"
+        />
+      </video>
     </div>
     <div>
       <van-tabs @click="onClick" sticky :offset-top="height">
@@ -20,7 +24,7 @@
                 <div class="phone">18500001223</div>
                 <div class="time">2022-04-12 15:30:00</div>
               </div>
-              <van-button color="red" icon="plus">关注</van-button>
+              <van-button color="#00b3ff" icon="plus">关注</van-button>
             </div>
             <div class="play-likes">
               <span><van-icon name="play-circle-o" />播放0次</span>
@@ -47,7 +51,9 @@
             <div>简介内容展示</div>
           </div>
         </van-tab>
-        <van-tab title="讨论">内容 2</van-tab>
+        <van-tab title="讨论">
+          <video-comments />
+        </van-tab>
       </van-tabs>
     </div>
   </div>
@@ -55,12 +61,14 @@
 
 <script>
 import Plyr from "plyr";
-import Hls from "hls.js";
+// import Hls from "hls.js";
+import VideoComments from "./comments/VideoComments.vue";
 export default {
   name: "videoDetail",
   data() {
     return {
-      source: "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8",
+      source:
+        "https://fsbucket-10017732.video.myqcloud.com/test-fsvideo/雾里_1627353447599_1642555201970.mp4",
       defaultOptions: {
         controls: [
           "play-large",
@@ -103,31 +111,19 @@ export default {
   mounted() {
     this.init();
   },
+  beforeDestroy() {
+    window.player && window.player.destroy();
+  },
   methods: {
     init() {
       const video = document.querySelector("video");
       const player = new Plyr(video, this.defaultOptions);
-
-      if (!Hls.isSupported()) {
-        video.src = this.source;
-      } else {
-        // For more Hls.js options, see https://github.com/dailymotion/hls.js
-        const hls = new Hls();
-        hls.loadSource(this.source);
-        hls.attachMedia(video);
-        window.hls = hls;
-
-        // Handle changing captions
-        player.on("languagechange", () => {
-          // Caption support is still flaky. See: https://github.com/sampotts/plyr/issues/994
-          setTimeout(() => (hls.subtitleTrack = player.currentTrack), 50);
-        });
-      }
-
-      // Expose player so it can be used from the console
       window.player = player;
     },
     onClick() {},
+  },
+  components: {
+    VideoComments,
   },
 };
 </script>

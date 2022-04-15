@@ -40,7 +40,7 @@ import NavBar from "components/navBar/NavBar";
 // import { upload } from "services/public";
 import { userUpdate } from "services/profile";
 import client from "utils/aliOss";
-import { formatTimeToStr } from "utils/utils";
+import { formatTimeToStr, addTimeStamp, fileExtension } from "utils/utils";
 export default {
   name: "personalCenter",
   data() {
@@ -80,11 +80,13 @@ export default {
       //   }
       // });
       // 直接上传oss
-      // const timestamp = new Date().getTime();
       console.log("file", file);
-      const name = `${formatTimeToStr(new Date(), "yyyy-MM-dd")}/JPEG/${
-        file.file.name
-      }`;
+      const fileName = addTimeStamp(file.file.name, "_");
+      const folder = fileExtension(file.file.name);
+      const name = `${formatTimeToStr(
+        new Date(),
+        "yyyy-MM-dd"
+      )}/${folder}/${fileName}`;
       client.put(name, file.file).then((res) => {
         console.log(res);
         if (res.res.statusCode == this.$statusCode.SUCCESS) {

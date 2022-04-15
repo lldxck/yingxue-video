@@ -42,3 +42,30 @@ export function formatTimeToStr(times, pattern) {
     return d.toLocaleString();
   }
 }
+/**
+ * 为文件名称加时间戳方式重名
+ * @param {*} fileName 文件名称
+ * @param {*} connector 连接符
+ * @returns
+ */
+export function addTimeStamp(fileName, connector = "-") {
+  const timeStamp = new Date().getTime();
+  const dotIndex = fileName.lastIndexOf(".");
+  const extension = fileName.substring(dotIndex);
+  const nameMain = fileName.substring(0, dotIndex);
+  return nameMain + connector + timeStamp + extension;
+}
+
+/**
+ * 获取文件扩展名
+ * @param {*} fileName
+ * @returns
+ */
+export function fileExtension(fileName, toUpperCase = "true") {
+  const dotIndex = fileName.lastIndexOf(".");
+  const extension = fileName.substring(dotIndex + 1);
+  if (toUpperCase) {
+    return extension.toUpperCase();
+  }
+  return extension;
+}
