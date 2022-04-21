@@ -30,7 +30,7 @@
       </div>
       <div class="btn">
         <van-button type="info" size="large" @click="login"
-          >登录/注册1111</van-button
+          >登录/注册000</van-button
         >
       </div>
     </div>
