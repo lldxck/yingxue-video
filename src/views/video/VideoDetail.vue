@@ -48,7 +48,7 @@
                 <p>分享</p>
               </div>
             </div>
-            <div>简介内容展示</div>
+            <div class="intro-content">简介内容展示</div>
           </div>
         </van-tab>
         <van-tab title="讨论">
@@ -67,8 +67,7 @@ export default {
   name: "videoDetail",
   data() {
     return {
-      source:
-        "https://fsbucket-10017732.video.myqcloud.com/test-fsvideo/雾里_1627353447599_1642555201970.mp4",
+      id: 0,
       defaultOptions: {
         controls: [
           "play-large",
@@ -107,6 +106,9 @@ export default {
       console.log(window.innerWidth);
       return (window.innerWidth * 9) / 16;
     },
+  },
+  created() {
+    this.id = this.$route.params.id;
   },
   mounted() {
     this.init();

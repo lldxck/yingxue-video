@@ -20,7 +20,7 @@
           ><van-icon name="delete-o" />删除</van-button
         >
       </div>
-      <div class="child-comment">
+      <div class="child-comment" v-if="true">
         <div class="child-comment-item">
           <span class="name">用户名称：</span>
           <span>评论内容评论内容评论内容评论内容评论内容评论内容评论内容</span>
@@ -174,6 +174,19 @@
         </div>
       </div>
     </van-popup>
+    <div class="comment-bar">
+      <van-field
+        v-model="commentText"
+        rows="1"
+        autosize
+        type="textarea"
+        :placeholder="placeholder"
+      >
+        <template #button>
+          <van-button size="small" color="#00b3ff">发布</van-button>
+        </template></van-field
+      >
+    </div>
   </div>
 </template>
 
@@ -183,6 +196,8 @@ export default {
   data() {
     return {
       show: false,
+      placeholder: "请输入评论内容",
+      commentText: "",
     };
   },
   computed: {

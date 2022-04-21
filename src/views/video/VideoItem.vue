@@ -1,10 +1,7 @@
 <template>
   <div class="video-item" @click="videoDetail">
     <div class="cover-img">
-      <img
-        :src="item.cover"
-        alt=""
-      />
+      <img :src="item.cover" alt="" />
     </div>
     <div class="video-info">
       <div class="title">{{ item.title }}</div>
@@ -35,7 +32,7 @@ export default {
   },
   methods: {
     videoDetail() {
-      this.$router.push({ path: "/videoDetail/1" });
+      this.$router.push({ path: `/videoDetail/${this.item.id}` });
     },
   },
 };

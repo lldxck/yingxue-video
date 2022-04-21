@@ -7,17 +7,21 @@
       background-color: #efefef;
       padding: 16px;
       border-radius: 4px;
+
       .child-comment-item {
         font-size: 12px;
         color: #666;
         margin-bottom: 4px;
+
         .name {
           color: #00b3ff;
         }
+
         span {
           line-height: 18px;
         }
       }
+
       .view-all {
         font-size: 12px;
         padding: 0;
@@ -27,10 +31,19 @@
         color: #00b3ff;
       }
     }
+
+    .comment-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
   }
+
   .popup-child {
     padding-top: 44px;
     box-sizing: border-box;
+
     .close {
       padding-left: 16px;
       height: 44px;
@@ -42,10 +55,12 @@
       display: flex;
       justify-content: space-between;
       box-shadow: 0 -3px 3px #eee;
+
       .title {
         font-size: 12px;
         color: #999;
       }
+
       .icon {
         height: 44px;
         line-height: 44px;
@@ -53,13 +68,16 @@
         text-align: center;
       }
     }
+
     .item-border {
       padding: 0 16px;
       border-bottom: 5px solid #eee;
     }
+
     .del-operation {
       display: flex;
       justify-content: flex-end;
+
       .delete-btn {
         height: 20px;
         font-size: 10px;
@@ -68,16 +86,20 @@
         border: none;
         margin: 6px 0;
       }
+
       .van-button--normal {
         padding: 0 8px;
       }
     }
+
     .child-comments {
       padding: 016px;
+
       .count {
         font-size: 8px;
         color: #999;
       }
+
       .content {
         .replay-name {
           color: #00b3ff;
@@ -85,20 +107,24 @@
       }
     }
   }
+
   .comment-item {
     background-color: #fff;
     border-bottom: 1px solid #eee;
     padding: 8px 0;
     display: flex;
+
     // justify-content: space-between;
     img {
       width: 34px;
       height: 34px;
       border-radius: 17px;
     }
+
     .comment-main {
       flex: 1;
       margin-left: 10px;
+
       .info {
         display: flex;
 
@@ -109,31 +135,38 @@
 
           flex: 1;
           height: 34px;
+
           p {
             margin: 0;
           }
+
           .name {
             font-size: 14px;
             color: #333;
           }
+
           .time {
             font-size: 12px;
             color: #999;
           }
         }
+
         .likes {
           font-size: 12px;
           color: "#999";
         }
       }
+
       .content {
         font-size: 13px;
         color: #666;
         margin-top: 10px;
       }
+
       .btn-operation {
         display: flex;
         justify-content: space-between;
+
         .replay-btn,
         .delete-btn {
           height: 20px;
@@ -143,6 +176,7 @@
           border: none;
           margin: 6px 0;
         }
+
         .van-button--normal {
           padding: 0 8px;
         }
