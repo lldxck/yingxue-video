@@ -72,10 +72,10 @@
 <script>
 import NavBar from "components/navBar/NavBar";
 import { categoryTree } from "services/category";
-// import { upload } from "services/public";
+import { upload } from "services/public";
 import { videoPublish } from "services/video";
-import { formatTimeToStr, addTimeStamp, fileExtension } from "utils/utils";
-import client from "utils/aliOss";
+// import { formatTimeToStr, addTimeStamp, fileExtension } from "utils/utils";
+// import client from "utils/aliOss";
 export default {
   name: "videoPublish",
   data() {
@@ -110,34 +110,34 @@ export default {
       file.message = "上传中...";
       const formData = new FormData();
       formData.append("file", file.file);
-      // upload(formData).then((res) => {
-      //   if (res.code == this.$statusCode.SUCCESS) {
-      //     file.status = "done";
-      //     file.message = "上传成功";
-      //     this.videoInfo.link = res.data;
-      //   } else {
-      //     this.$toast("上传失败");
-      //     file.status = "failed";
-      //     file.message = "上传失败";
-      //   }
-      // });
-      console.log("file", file);
-      const fileName = addTimeStamp(file.file.name, "_");
-      const folder = fileExtension(file.file.name);
-      const name = `${formatTimeToStr(
-        new Date(),
-        "yyyy-MM-dd"
-      )}/${folder}/${fileName}`;
-      client.put(name, file.file).then((res) => {
-        console.log(res);
-        if (res.res.statusCode == this.$statusCode.SUCCESS) {
+      upload(formData).then((res) => {
+        if (res.code == this.$statusCode.SUCCESS) {
           file.status = "done";
           file.message = "上传成功";
-          this.videoInfo.link = res.url;
+          this.videoInfo.link = res.data;
         } else {
           this.$toast("上传失败");
+          file.status = "failed";
+          file.message = "上传失败";
         }
       });
+      // console.log("file", file);
+      // const fileName = addTimeStamp(file.file.name, "_");
+      // const folder = fileExtension(file.file.name);
+      // const name = `${formatTimeToStr(
+      //   new Date(),
+      //   "yyyy-MM-dd"
+      // )}/${folder}/${fileName}`;
+      // client.put(name, file.file).then((res) => {
+      //   console.log(res);
+      //   if (res.res.statusCode == this.$statusCode.SUCCESS) {
+      //     file.status = "done";
+      //     file.message = "上传成功";
+      //     this.videoInfo.link = res.url;
+      //   } else {
+      //     this.$toast("上传失败");
+      //   }
+      // });
     },
     clickPreview() {
       this.videoShow = true;

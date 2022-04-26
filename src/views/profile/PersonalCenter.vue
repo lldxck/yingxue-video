@@ -37,10 +37,10 @@
 
 <script>
 import NavBar from "components/navBar/NavBar";
-// import { upload } from "services/public";
+import { upload } from "services/public";
 import { userUpdate } from "services/profile";
-import client from "utils/aliOss";
-import { formatTimeToStr, addTimeStamp, fileExtension } from "utils/utils";
+// import client from "utils/aliOss";
+// import { formatTimeToStr, addTimeStamp, fileExtension } from "utils/utils";
 export default {
   name: "personalCenter",
   data() {
@@ -70,31 +70,31 @@ export default {
       this.$router.go(-1);
     },
     afterRead(file) {
-      // const formData = new FormData();
-      // formData.append("file", file.file);
-      // upload(formData).then((res) => {
-      //   if (res.code == this.$statusCode.SUCCESS) {
-      //     this.userUpdate(res.data);
-      //   } else {
-      //     this.$toast("上传失败");
-      //   }
-      // });
-      // 直接上传oss
-      console.log("file", file);
-      const fileName = addTimeStamp(file.file.name, "_");
-      const folder = fileExtension(file.file.name);
-      const name = `${formatTimeToStr(
-        new Date(),
-        "yyyy-MM-dd"
-      )}/${folder}/${fileName}`;
-      client.put(name, file.file).then((res) => {
-        console.log(res);
-        if (res.res.statusCode == this.$statusCode.SUCCESS) {
-          this.userUpdate(res.url);
+      const formData = new FormData();
+      formData.append("file", file.file);
+      upload(formData).then((res) => {
+        if (res.code == this.$statusCode.SUCCESS) {
+          this.userUpdate(res.data);
         } else {
           this.$toast("上传失败");
         }
       });
+      // 直接上传oss
+      // console.log("file", file);
+      // const fileName = addTimeStamp(file.file.name, "_");
+      // const folder = fileExtension(file.file.name);
+      // const name = `${formatTimeToStr(
+      //   new Date(),
+      //   "yyyy-MM-dd"
+      // )}/${folder}/${fileName}`;
+      // client.put(name, file.file).then((res) => {
+      //   console.log(res);
+      //   if (res.res.statusCode == this.$statusCode.SUCCESS) {
+      //     this.userUpdate(res.url);
+      //   } else {
+      //     this.$toast("上传失败");
+      //   }
+      // });
     },
     userUpdate(avatar) {
       const info = { ...this.userInfo };

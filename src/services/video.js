@@ -27,3 +27,15 @@ export function videoPublish(params) {
     data: params
   })
 }
+
+/**
+ * 视频详情
+ * @param {*} id 
+ * @returns 
+ */
+export function videoDetail(id) {
+  return request({
+    url: api.VIDEO_DETAIL_API + id,
+    method: method.GET,
+  })
+}

@@ -13,5 +13,6 @@ export default {
   CATEGORY_TREE_API: '/category/tree',//分类树形数据
   // 视频
   VIDEO_API: '/videos/publish',//上传视频
-  VIDEO_RECOMMENDS_API:'/videos/recommends'
+  VIDEO_RECOMMENDS_API:'/videos/recommends',//视频推荐列表
+  VIDEO_DETAIL_API:'/videos/',
 };
