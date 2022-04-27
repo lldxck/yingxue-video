@@ -4,6 +4,24 @@
   background-color: #fff;
   box-sizing: border-box;
 
+  .video-back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    height: 44px;
+    background-color: transparent;
+
+    .van-icon {
+      width: 44px;
+      height: 44px;
+      line-height: 44px;
+      text-align: center;
+      color: #fff;
+    }
+  }
+
   .video-container {
     position: fixed;
     top: 0;
@@ -63,8 +81,17 @@
       }
     }
 
+    .video-title {
+      padding: 0 16px;
+      font-size: 20px;
+      color: #333;
+      line-height: 28px;
+      margin-bottom: 5px;
+    }
+
     .play-likes {
-      padding: 10px 16px;
+      padding: 0 16px;
+      margin-top: 3px;
 
       span {
         display: inline-block;
@@ -80,9 +107,11 @@
 
     .operate {
       padding: 0 16px;
+      margin-top: 8px;
       display: flex;
       justify-content: space-between;
-      .active{
+
+      .active {
         color: #00b3ff;
       }
 

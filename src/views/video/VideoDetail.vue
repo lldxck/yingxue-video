@@ -4,6 +4,7 @@
     :style="{ paddingTop: height + 'px' }"
     v-if="videoData"
   >
+    <div class="video-back"><van-icon name="arrow-left" @click="goBack" /></div>
     <div class="video-container" :style="{ height: height + 'px' }">
       <video
         id="player"
@@ -15,24 +16,44 @@
         <source :src="videoData.link" />
       </video>
     </div>
+    <div></div>
 
     <div>
-      <van-tabs @click="onClick" sticky :offset-top="height">
+      <van-tabs sticky :offset-top="height">
         <van-tab title="简介">
           <div class="intro">
             <!-- 发布者信息 -->
             <div class="uploader-info">
-              <img src="~assets/images/defaultAvatar.png" alt="" />
+              <img :src="videoData.avatar" alt="" />
               <div class="info">
-                <div class="phone">18500001223</div>
-                <div class="time">2022-04-12 15:30:00</div>
+                <div class="phone">{{ videoData.uploaderName }}</div>
+                <div class="time">{{ videoData.following }}粉丝</div>
               </div>
-              <van-button color="#ee0a24" icon="plus">关注</van-button>
-              <!-- <van-button color="#00b3ff" icon="plus">已关注</van-button> -->
+              <van-button
+                color="#ee0a24"
+                icon="plus"
+                v-if="!videoData.isFollowing"
+                @click="following"
+                >关注</van-button
+              >
+              <van-button color="#00b3ff" v-else @click="following"
+                >已关注</van-button
+              >
+            </div>
+            <div class="video-title">{{ videoData.title }}</div>
+            <div class="play-likes">
+              <span
+                ><van-icon name="video-o" />{{ videoData.categoryName }}</span
+              >
             </div>
             <div class="play-likes">
-              <span><van-icon name="play-circle-o" />播放0次</span>
-              <span><van-icon name="good-job-o" />点赞0次</span>
+              <span
+                ><van-icon name="play-circle-o" />播放{{
+                  videoData.played
+                }}次</span
+              >
+              <span><van-icon name="good-job-o" />点赞{{}}次</span>
+              <span><van-icon name="clock-o" />{{ videoData.createdAt }}</span>
             </div>
             <div class="operate">
               <div :class="{ active: true }">
@@ -68,6 +89,8 @@ import Plyr from "plyr";
 // import Hls from "hls.js";
 import VideoComments from "./comments/VideoComments.vue";
 import { videoDetail } from "services/video";
+import { userFollowing } from "services/profile";
+import { formatTimeToStr } from "utils/utils";
 export default {
   name: "videoDetail",
   data() {
@@ -125,6 +148,14 @@ export default {
       videoDetail(id).then((res) => {
         console.log(res);
         if (res.code == this.$statusCode.SUCCESS) {
+          res.data.createdAt = formatTimeToStr(
+            res.data.createdAt,
+            "yyyy-MM-dd hh:mm:ss"
+          );
+          res.data.updatedAt = formatTimeToStr(
+            res.data.updatedAt,
+            "yyyy-MM-dd hh:mm:ss"
+          );
           this.videoData = res.data;
           setTimeout(() => {
             this.init();
@@ -139,7 +170,25 @@ export default {
       const player = new Plyr(video, this.defaultOptions);
       window.player = player;
     },
-    onClick() {},
+    goBack() {
+      this.$router.go(-1);
+    },
+    following() {
+      userFollowing(this.videoData.uid).then((res) => {
+        if (res.code == this.$statusCode.SUCCESS) {
+          this.videoData.isFollowing = !this.videoData.isFollowing;
+          if (this.videoData.isFollowing) {
+            this.videoData.following = this.videoData.following + 1;
+            this.$toast("关注成功");
+          } else {
+            this.$toast("取消关注成功");
+            this.videoData.following = this.videoData.following - 1;
+          }
+        } else {
+          this.$toast(res.message);
+        }
+      });
+    },
   },
   components: {
     VideoComments,

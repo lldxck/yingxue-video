@@ -7,12 +7,13 @@ export default {
   LOGINOUT_API: "/user/token", //注销
   USER_API: "/user/user", //用户信息
   USER_UPDATE_API: "/user/user", //修改用户信息
+  USER_FOLLOWING_API: '/user/following/',//用户关注
   // 分类
   CATEGORY_API: '/category/categories',//分类列表
   // 分类树形数据
   CATEGORY_TREE_API: '/category/tree',//分类树形数据
   // 视频
   VIDEO_API: '/videos/publish',//上传视频
-  VIDEO_RECOMMENDS_API:'/videos/recommends',//视频推荐列表
-  VIDEO_DETAIL_API:'/videos/',
+  VIDEO_RECOMMENDS_API: '/videos/recommends',//视频推荐列表
+  VIDEO_DETAIL_API: '/videos/',//视频详情
 };

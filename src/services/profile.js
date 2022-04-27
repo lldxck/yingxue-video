@@ -26,3 +26,15 @@ export function userUpdate(params) {
   });
 }
 
+/**
+ * 关注/取消关注用户
+ * @param {*} id 
+ * @returns 
+ */
+export function userFollowing(id) {
+  return request({
+    url: api.USER_FOLLOWING_API + id,
+    method: method.GTE
+  })
+}
+
